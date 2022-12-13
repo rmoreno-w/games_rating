@@ -11,7 +11,7 @@ exports.create = (req, res) => {
   const user = new User({
     email: req.body.email,
     name: req.body.name,
-    senha: req.body.senha,
+    password: req.body.password,
   });
 
   // Save User in the database
