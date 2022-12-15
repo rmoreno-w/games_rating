@@ -62,6 +62,19 @@ exports.readById = (req, res) => {
     });
 };
 
+ exports.findByEmail = (email) => {
+   var condition = email
+     ? { email: { $regex: new RegExp(email), $options: "i" } }
+     : {};
+   return User.findOne(condition)
+     .then((data) => {
+       return data;
+     })
+     .catch((err) => {
+       return err;
+     });
+ };
+
 exports.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
