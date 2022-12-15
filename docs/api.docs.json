@@ -1,13 +1,67 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2022-12-13T18:01:22.381Z",
-  "__export_source": "insomnia.desktop.app:v2022.6.0",
+  "__export_date": "2022-12-15T04:56:54.874Z",
+  "__export_source": "insomnia.desktop.app:v2022.4.2",
   "resources": [
+    {
+      "_id": "req_2846f9466b474146baca1753f73d4326",
+      "parentId": "fld_c87bd3a8c20e46dd8b58df08119d3280",
+      "modified": 1671080189776,
+      "created": 1671080127588,
+      "url": "{{ _.localbaseurl }}/api/login",
+      "name": "Login",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"teste3@gmail.com\",\n\t\"password\": \"teste3\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_7e0cfab64ac7431b9f07d836afa2323b"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1671080127588,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_c87bd3a8c20e46dd8b58df08119d3280",
+      "parentId": "wrk_3b58ffbdbe224d8fa5d4ddbf016c48b2",
+      "modified": 1671080138148,
+      "created": 1671080138148,
+      "name": "Session",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1671080138148,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_3b58ffbdbe224d8fa5d4ddbf016c48b2",
+      "parentId": null,
+      "modified": 1670896357684,
+      "created": 1670896357684,
+      "name": "game_ratings",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
     {
       "_id": "req_fb22c67358144703b2062028b8aa1b10",
       "parentId": "fld_6ad861f2d95d4f08a661f068f0aedbb2",
-      "modified": 1670954437844,
+      "modified": 1671080168507,
       "created": 1670896502012,
       "url": "{{ _.localbaseurl }}/api/users",
       "name": "Create",
@@ -18,7 +72,13 @@
         "text": "{\n\t\"email\": \"teste3@gmail.com\",\n\t\"name\": \"teste3\",\n\t\"password\" : \"teste3\"\n}"
       },
       "parameters": [],
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_7ee677e4650c46e2ba92548542acccbb"
+        }
+      ],
       "authentication": {},
       "metaSortKey": -1670896502013,
       "isPrivate": false,
@@ -41,16 +101,6 @@
       "environmentPropertyOrder": null,
       "metaSortKey": -1670896367547,
       "_type": "request_group"
-    },
-    {
-      "_id": "wrk_3b58ffbdbe224d8fa5d4ddbf016c48b2",
-      "parentId": null,
-      "modified": 1670896357684,
-      "created": 1670896357684,
-      "name": "game_ratings",
-      "description": "",
-      "scope": "collection",
-      "_type": "workspace"
     },
     {
       "_id": "req_b4fcd337b56a43b4b9ff7ebf2f611420",
