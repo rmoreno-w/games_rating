@@ -2,6 +2,7 @@ module.exports = (app) => {
   const user = require("../controllers/users.controller.js");
   const session = require("../controllers/auth.controller.js");
   const game = require("../controllers/games.controller.js");
+  const console = require("../controllers/console.controller.js");
   const isAuthenticated = require("../middlewares/isAuthenticated.js");
   
   var router = require("express").Router();
@@ -25,6 +26,11 @@ module.exports = (app) => {
   router.get("/games/find/genre", game.readByGenre);
   router.put("/games/:id", game.update);
   router.delete("/games/:id", game.delete);
+
+  // Consoles Routes
+  router.get("/consoles", isAuthenticated, console.readAll);
+  router.get("/consoles/:id", console.readById);
+  router.get("/consoles/find/name", console.readByName);
 
   app.use("/api", router);
 };

@@ -9,5 +9,6 @@ db.url = dbConfig.url;
 
 db.users = require("./users.model.js")(mongoose);
 db.games = require("./games.model.js")(mongoose);
+db.consoles = require("./consoles.model.js")(mongoose);
 
 module.exports = db;
