@@ -1,5 +1,6 @@
 const db = require("../models");
 const Game = db.games;
+const Console = db.consoles;
 
 exports.create = (req, res) => {
   if (!req.body.title) {
@@ -8,6 +9,7 @@ exports.create = (req, res) => {
   }
   // Create an Game
   const game = new Game({
+    console_id: req.body.console_id,
     title: req.body.title,
     resume: req.body.resume,
     developer: req.body.developer,
@@ -28,6 +30,20 @@ exports.create = (req, res) => {
         message: err.message || "Some error occurred while creating Game.",
       });
     });
+
+  // Update Console
+  Console.findByIdAndUpdate(
+    req.body.console_id,
+    { $push: { games: game._id } },
+    { new: true },
+    (err) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Error updating Console",
+        });
+      }
+    }
+  );
 };
 
 exports.readAll = (req, res) => {
