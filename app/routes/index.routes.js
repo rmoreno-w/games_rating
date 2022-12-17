@@ -34,7 +34,7 @@ module.exports = (app) => {
   router.get("/consoles", isAuthenticated, console.readAll);
   router.get("/consoles/:id", console.readById);
   router.get("/consoles/find/name", console.readByName);
-  router.get("/consoles/topGames", console.getTopGames);
+  router.get("/consoles/topGames/:id", console.getTopGames);
 
   app.use("/api", router);
 };
