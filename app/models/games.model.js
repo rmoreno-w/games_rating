@@ -1,4 +1,13 @@
 module.exports = (mongoose) => {
+  const reviewSchema = mongoose.Schema(
+    {
+      user_id: String,
+      rating: Number,
+      description: String,
+    },
+    { timestamps: true }
+  );
+
   var schema = mongoose.Schema(
     {
       console_id: String,
@@ -8,6 +17,7 @@ module.exports = (mongoose) => {
       genre: String,
       rating: Number,
       img: String,
+      reviews: [reviewSchema],
     },
     { timestamps: true }
   );

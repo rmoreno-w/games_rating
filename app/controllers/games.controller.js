@@ -83,8 +83,7 @@ exports.readByTitle = (req, res) => {
     .then((data) => {
       if (data.length == 0)
         res.status(404).send({ message: "Not found Game with title " + title });
-      else
-        res.send(data);
+      else res.send(data);
     })
     .catch((err) => {
       console.log(err);
@@ -103,9 +102,10 @@ exports.readByDeveloper = (req, res) => {
   Game.find(condition)
     .then((data) => {
       if (data.length == 0)
-        res.status(404).send({ message: "Not found Game with developer " + developer });
-      else
-        res.send(data);
+        res
+          .status(404)
+          .send({ message: "Not found Game with developer " + developer });
+      else res.send(data);
     })
     .catch((err) => {
       console.log(err);
@@ -114,7 +114,6 @@ exports.readByDeveloper = (req, res) => {
       });
     });
 };
-
 
 exports.readByGenre = (req, res) => {
   const genre = req.query.genre;
@@ -126,8 +125,7 @@ exports.readByGenre = (req, res) => {
     .then((data) => {
       if (data.length == 0)
         res.status(404).send({ message: "Not found Game with genre " + genre });
-      else
-        res.send(data);
+      else res.send(data);
     })
     .catch((err) => {
       console.log(err);
@@ -176,14 +174,57 @@ exports.delete = (req, res) => {
       } else {
         res.send({
           message: "Game was deleted successfully!",
-          deleted: data
+          deleted: data,
         });
       }
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
       res.status(500).send({
         message: "Could not delete Game with id=" + id,
       });
     });
+};
+
+exports.review = async (req, res) => {
+  if (!req.body.rating) {
+    res.status(400).send({ message: "Rating can not be empty!" });
+    return;
+  }
+
+  const user_id = req.user.id;
+
+  Game.findById(req.body.game_id, (err, result) => {
+    if (!err) {
+      if (!result)
+        res.status(404).send({ message: "Not found Game with id " + id });
+      else {
+        result.reviews.push({
+          user_id: user_id,
+          rating: req.body.rating,
+          description: req.body.description,
+        });
+
+        let total = 0;
+        let count = 0;
+
+        result.reviews.forEach((review) => {
+          total += review.rating;
+          count++;
+        });
+
+        mean = total / count;
+
+        result.rating = mean.toFixed(2);;
+
+        result.save(function (saveerr, saveresult) {
+          if (!saveerr) {
+            res.status(200).send(saveresult);
+          } else {
+            res.status(400).send(saveerr.message);
+          }
+        });
+      }
+    } else res.send(err);
+  });
 };

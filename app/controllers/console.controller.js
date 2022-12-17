@@ -1,5 +1,6 @@
 const db = require("../models");
 const Console = db.consoles;
+const Game = db.games;
 
 exports.readAll = (req, res) => {
   Console.find()
@@ -52,4 +53,30 @@ exports.readByName = (req, res) => {
           err.message || "Some error occurred while retrieving Consoles.",
       });
     });
+};
+
+exports.getTopGames = async (req, res) => {
+  const id = req.params.id;
+
+  const gamesFound = (await Console.findById(id, "games")).games;
+
+  const result = gamesFound.map(async (game) => {
+    const gameFound = await Game.findById(game);
+    return gameFound;
+  });
+
+  let allGames = await Promise.all(result);
+
+  // Bouble Sort for orderning descending
+  for (var i = 0; i < allGames.length; i++) {
+    for (var j = 0; j < allGames.length; j++) {
+      if (allGames[i].rating > allGames[j].rating) {
+        var temp = allGames[i];
+        allGames[i] = allGames[j];
+        allGames[j] = temp;
+      }
+    }
+  }
+
+  res.send(allGames.slice(0, 3));
 };
