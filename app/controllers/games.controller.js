@@ -205,6 +205,18 @@ exports.review = async (req, res) => {
           description: req.body.description,
         });
 
+        let total = 0;
+        let count = 0;
+
+        result.reviews.forEach((review) => {
+          total += review.rating;
+          count++;
+        });
+
+        mean = total / count;
+
+        result.rating = mean.toFixed(2);;
+
         result.save(function (saveerr, saveresult) {
           if (!saveerr) {
             res.status(200).send(saveresult);
@@ -213,6 +225,6 @@ exports.review = async (req, res) => {
           }
         });
       }
-    } else res.send(data);
+    } else res.send(err);
   });
 };
