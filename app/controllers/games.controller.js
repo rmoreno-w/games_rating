@@ -228,3 +228,90 @@ exports.review = async (req, res) => {
     } else res.send(err);
   });
 };
+
+exports.autoComplete = async (req, res) => {
+  const genre = req.query.genre;
+  const developer = req.query.developer;
+  const title = req.query.title;
+
+  if (developer && !genre && !title) {
+    let findOptions = { developer: { $regex: new RegExp(developer), $options: "i" } };
+    let queryLimit = 5;
+    let projection = { _id: 0, developer: 1 };
+    await Game.find(findOptions)
+      .limit(queryLimit)
+      .select(projection)
+      .then((data) => {
+        if (data.length == 0) res.status(404).send({ message: "Did not found a Game with developer containing " + developer });
+        else {
+          let flattenedData = [];
+          for (key in data) flattenedData.push(data[key].developer);
+          let uniqueData = [...new Set(flattenedData)];
+
+          console.log(uniqueData);
+          res.send(uniqueData);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving Games.",
+        });
+      });
+  }
+  if (title && !genre && !developer) {
+    let findOptions = { title: { $regex: new RegExp(title), $options: "i" } };
+    let queryLimit = 5;
+    let projection = { _id: 0, title: 1 };
+    await Game.find(findOptions)
+      .limit(queryLimit)
+      .select(projection)
+      .then((data) => {
+        if (data.length == 0) res.status(404).send({ message: "Did not found a Game with title containing " + title });
+        else {
+          let flattenedData = [];
+          for (key in data) flattenedData.push(data[key].title);
+          let uniqueData = [...new Set(flattenedData)];
+
+          console.log(uniqueData);
+          res.send(uniqueData);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving Games.",
+        });
+      });
+  }
+  if (genre && !developer && !title) {
+    let findOptions = { genre: { $regex: new RegExp(genre), $options: "i" } };
+    let queryLimit = 5;
+    let projection = { _id: 0, genre: 1 };
+    await Game.find(findOptions)
+      .limit(queryLimit)
+      .select(projection)
+      .then((data) => {
+        if (data.length == 0) res.status(404).send({ message: "Did not found a Game with genre containing " + genre });
+        else {
+          let flattenedData = [];
+          for (key in data) flattenedData.push(data[key].genre);
+          let uniqueData = [...new Set(flattenedData)];
+
+          console.log(uniqueData);
+          res.send(uniqueData);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving Games.",
+        });
+      });
+  }
+  // else {
+  //     res.status(404).send({
+  //         message: 'Wrong parameters for the search. Use only one of the following: developer, title or genre.',
+  //     });
+  // }
+};

@@ -26,6 +26,7 @@ module.exports = (app) => {
   router.get("/games/find/genre", game.readByGenre);
   router.put("/games/:id", game.update);
   router.delete("/games/:id", game.delete);
+  router.get('/games/find/autocomplete', game.autoComplete);
 
   // Game Review
   router.post("/games/review", isAuthenticated, game.review);
