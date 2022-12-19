@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: ["http://localhost:3000", "https://games-rating-frontend-lhp4og7uz-rmoreno-w.vercel.app"],
 };
 
 app.use(cors(corsOptions));
